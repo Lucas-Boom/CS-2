@@ -1,0 +1,209 @@
+"""
+Author: Lucas Boom
+Sources: Mr. Campbell, Assignment Sheet
+Description: Gives the user the price it takes to ship item based on the size and how far the user wants to ship the package at the post office
+Date: 10.22.25
+Bugs: Does not work if you do not put 5 numbers in between commas for input 
+Log: 1.0 C.G
+"""
+
+def get_size(length, height, width):
+    '''
+    Finds what package it is based on the package dimensions the user inputs
+     Args:
+        length, height, width(int): User's inputed package dimensions
+    Returns:
+        The type of package(string)
+    '''
+
+    #if length, height, and width is between these values return regular post card
+    if length > 3.5 and length < 4.25 and height > 3.5 and height < 6 and width > .007 and width < .016:
+        return "regular_post_card" 
+
+    #if length, height, and width is between these values return large post card 
+    elif length > 4.25 and length < 6 and height > 6 and height < 11.5 and width > .007 and width < .015:
+        return "large_post_card"
+
+    #if length, height, and width is between these values return envelope
+    elif length > 3.5 and length < 6.125 and height > 5 and height < 11.5 and width > .016 and width < .25:
+        return "envelope"
+
+    #if length, height, and width is between these values return large envelope
+    elif length > 6.125 and length < 24 and height > 11 and height < 18 and width > .25 and width < .5:
+        return "large_envelope"
+ 
+    #if length, height, and width is between these values return package
+    elif length > 24 and height > 18 and width > .5 and length + height + height + width + width < 84:
+        return "package"
+
+    #if length, height, and width is between these values return large package
+    elif length + height + height + width + width > 84 <= 130:
+        return "large_package"
+    
+    #if the perimeter of the package is greater or equal to 130 package is unmailable
+    
+    elif length + height + height + width + width >= 130 or length < 3.5 and height < 3.5 and width < .007:
+        print("Sorry, you package is unmailable")
+        exit()
+     #if length is less than 3.5 height is less than 3.5 and width is less than .007 print unmailable and quit
+
+
+
+def get_zip(zip1):
+    '''
+    Finds which zone the user is mailing the package from
+    Args:
+        zip1(int): User's inputed zip code
+    Returns:
+        The zone number where the user is mailing the package from
+    '''
+    
+    zone_start = int()
+
+    #if zip code is between these values return 1
+    if zip1 >= 1 and zip1 <= 6999:
+        zone_start = 1
+    #if zip code is between these values return 2
+    elif zip1 >= 7000 and zip1 <= 19999:
+        zone_start = 2
+    #if zip code is between these values return 3
+    elif zip1 >= 20000 and zip1 <= 35999:
+         zone_start = 3
+    #if zip code is between these values return 4
+    elif zip1 >= 36000 and zip1 <= 62999:
+         zone_start = 4
+    #if zip code is between these values return 5
+    elif zip1 >= 63000 and zip1 <= 84999:
+         zone_start = 5
+    #if zip code is between these values return 6
+    elif zip1 >= 85000 and zip1 <= 99999:
+         zone_start = 6
+
+    #return the zone to the function
+    return zone_start 
+
+def get_zip2(zip2):
+    '''
+    Finds which zone the user is mailing the package to
+    Args:
+        zip2(int): User's inputed zip code
+    Returns:
+        The zone number where the user is mailing the package to
+    '''
+    
+    zone_end = int()
+
+    #if zip code is between these values return 1
+    if zip2 >= 1 and zip2 <= 6999:
+         zone_end = 1
+    #if zip code is between these values return 2
+    elif zip2 >= 7000 and zip2 <= 19999:
+         zone_end = 2
+    #if zip code is between these values return 3
+    elif zip2 >= 20000 and zip2 <= 35999:
+         zone_end = 3
+    #if zip code is between these values return zone 4
+    elif zip2 >= 36000 and zip2 <= 62999:
+         zone_end = 4
+    #if zip code is between these values return zone 5
+    elif zip2 >= 63000 and zip2 <= 84999:
+         zone_end = 5
+    #if zip code is between these values return zone 6
+    elif zip2 >= 85000 and zip2 <= 99999:
+         zone_end = 6
+    
+
+    #return the zone number where the package is going to be mailed to
+    return zone_end
+   
+def get_price(mail_type, difference):
+    '''
+    Finds the price of the package based on mail_type and distance package has to travel
+    Args:
+        difference(int): distance user's package has to travel
+        mail_type(string): User's package type
+    Returns:
+        The zone number where the user is mailing the package to
+    '''
+    
+    #if mail type is regular post card use this formula
+    if mail_type == "regular_post_card": 
+        price = .20 + .03*(difference)
+        return price
+    #if mail type is large post card use this formula 
+    elif mail_type == "large_post_card": 
+        price = .37 + .03*(difference)
+        return price
+    #if mail type is envelope use this formula 
+    elif mail_type == "envelope": 
+        price = .37 + .04*(difference)
+        return price
+    #if mail type is a large envelope use this formula
+    elif mail_type == "large_envelope": 
+        price = .60 + .05*(difference)
+        return price
+    #if mail type is package use this formula
+    elif mail_type == "package": 
+        price = 2.95 + .25*(difference)
+        return price
+    #if mail type is large package use this formula
+    elif mail_type == "large_package": 
+        price = 3.95 + .35*(difference)
+        
+        #return the price
+        return price
+
+    
+
+def main():
+
+    #set amount of times user can mail a package to zero
+    #While the amount of times user mailed package is less than zero:
+    #Ask user if he wants to mail a package or exit
+    counter = 0 
+    while counter < 5:
+        option = input('''                                  
+            What would you like to do?
+            1. Find price to mail your package? 
+            2. Exit''')
+
+        #if user says he would like to mail package:     
+        if option == "1":
+                try: 
+                    #ask user for length, height, and width
+                    #split the numbers by comma
+                    #give each number user inputed to variables length, height, width, zip1, and zip2 
+                    data = input("Please enter your package dimensions in the following order: length, height, width, zip code 1(from where), zip code 2(to where)")
+                    data = data.split(',')
+                    length = float(data[0])
+                    width = float(data[1])
+                    height = float(data[2])
+                    zip1 = int(data[3])
+                    zip2 = int(data[4])
+
+                    #find the difference in zone 1(where the package is getting mail from) to zone 2(where the package is being mailed to)
+                    #assign variable mail_type to what function mail_type returned
+                    difference = abs(get_zip(zip1) - get_zip2(zip2))
+                    mail_type = get_size(length, width, height)
+
+                    #print the total price and call the price calculator function    
+                    price = get_price(mail_type, difference)
+                    print (f"Your total cost is ${price}")   
+
+                    #add 1 to counter of amount of times user can mail a package
+                    counter += 1 
+
+                #if value error print package is unmailable
+                except ValueError: 
+                    print("Unmailable")
+            
+                    
+        #if user asks to quit and exit     
+        elif option == "2": 
+            break
+
+        #if anything else print package is unmailable
+        else: 
+            print("Your package is unmailable")
+           
+main() 
