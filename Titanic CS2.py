@@ -40,7 +40,7 @@ def gender_count(file):
     excel = f'''There were this many males:, There were this many females:,
     {male_count}, {female_count}'''
  
-    with open('gender_count_csv', 'x') as gender_count:
+    with open('gender_count.csv', 'x') as gender_count:
         gender_count.write(excel)
 
 def survival_rate(file):
@@ -64,7 +64,7 @@ def survival_rate(file):
     excel = f'''percentage of people who survived, percentage of people who died,
     {(survival_rate*100):.2f}%, {((1 - survival_rate)*100):.2f}%'''
  
-    with open('survival_rate_csv', 'x') as survival_rate_file:
+    with open('survival_rate.csv', 'x') as survival_rate_file:
         survival_rate_file.write(excel)
     
 
