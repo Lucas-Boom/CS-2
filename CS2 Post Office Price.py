@@ -154,7 +154,6 @@ def get_price(mail_type, difference):
         return price
 
     
-
 def main():
 
     #set amount of times user can mail a package to zero
@@ -188,7 +187,14 @@ def main():
 
                     #print the total price and call the price calculator function    
                     price = get_price(mail_type, difference)
-                    print (f"Your total cost is ${price}")   
+
+                    formatted = str(price).lstrip('0')
+
+                    formatted = f"{price:.2f}".lstrip('0')
+
+                
+
+                    print (f"Your total cost is {formatted}")   
 
                     #add 1 to counter of amount of times user can mail a package
                     counter += 1 
