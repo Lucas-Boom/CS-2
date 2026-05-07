@@ -1,0 +1,185 @@
+'''
+Author: Lucas Boom 
+Date: 5/7/26
+Description: prints a 5x5 battleship board and asks user where he would like to go
+List of completed functions: display_board, player_move, place_dots, check_winner, play_again, main 
+Log: 1.0
+'''
+import random #imports random
+
+def display_board(board): 
+    '''
+    prints board using a 'for' loop to elimate parentesis and quotes around board moves
+    Args: 
+        board(list of lists): a 5x5 battleship board 
+    Returns:
+        Printed board
+    '''
+    for row in board:
+        for cell in row:     
+            print(cell, end=' ')        
+        print()
+
+def player_move(player1, player_turn, board):
+    '''
+    asks player x for row and column for their move, and assigns board values to that move
+    Args:
+        player1(str): player's inputed name for player X
+        player_turn(str): representation of player X 
+        board(list of lists): a 5x5 tic tac toe board 
+    Returns:
+        player's x's move for where they go on the tic tac toe board
+    '''
+
+    while True:
+
+        row = input(f'{player1}, which row would you like?') #asks user for row
+        if row == '1' or row == '2' or row == '3' or row == '4' or row == '5':
+             pass
+        else: 
+            print('sorry, that is not a row') #else, print sorry that is not a row
+            continue
+
+        column = input(f'{player1}, which column would you like?') #ask user for column
+        if column == '1' or column == '2' or column == '3' or column == '4' or column == '5':
+            pass
+        else:  
+            print('sorry, that is not a column') #else, print sorry that is not a column
+            continue
+
+        
+
+        
+        if board[int(row)-1][int(column)-1] == "-": #if board of row -1 and column -1 is an empty space
+            board[int(row)-1][int(column)-1] = player_turn #if empty, makes it player X's turn
+            display_board(board) #print board
+            print("That was a miss!")
+            break
+        
+        elif board[int(row)-1][int(column)-1] == "🛥️": #if board of row -1 and column -1 is a boat
+            board[int(row)-1][int(column)-1] = player_turn #if empty, makes it player X's turn
+            display_board(board) #print board
+            print("That was a hit!")
+            break
+        
+        else:
+            print('that was already attempted, try to hit something else') #else, tell user that they need to pick another box
+            continue
+
+def place_dots(dots, board):
+    '''
+    places dots/battleships on 5x5 board
+    Args:
+        dots(str): where the dots are placed
+        board(list of lists): a 5x5 tic tac toe board  
+    Returns:
+        placed dots for where they go on the tic tac toe board
+    '''
+    
+    dots_placed = 0
+    while True:
+        
+        if dots_placed < 4:
+            
+            column = ['1','2','3','4','5'] #possible column posibilites 
+            column = random.choice(column) #choose randomly from column posibilities
+            row = ['1','2','3','4','5'] #possible row posibilities
+            row = random.choice(row) #choose randoms from row posibilities
+
+            if board[int(row)-1][int(column)-1] == "-": #subracts 1 from row and column of the random row and column and checks if it an empty space
+                board[int(row)-1][int(column)-1] = dots
+                dots_placed += 1
+            
+            else: 
+                continue
+        
+        else: 
+            break
+    
+
+def check_winner(board):
+    '''
+    checks if winner won or not
+    Args:
+        board(list of lists): a 5x5 tic tac toe board  
+    Returns:
+        checked win or false if player won
+    '''
+    
+    for row in board: 
+        for cell in row:
+            if cell == '🛥️': #if there are still boats left on board, return false
+                return False
+    
+    print('Congratulations, all ships have been sunk!')
+    print("""
+    .-=========-.
+    \'-=======-'/
+    _|   .=.   |_
+    ((| {{1}}  |))
+    \|   /|\   |/
+    \__ '`' __/
+        _`) (`_
+    _/_______\_
+    /___________\
+
+    """)
+    playagain()
+
+    
+
+def main(): 
+   
+    
+    player1 = input("Player, what is your name: ") #asks player 1 for name
+
+    board = [['-', '-', '-', '-', '-'],  #board
+            ['-', '-', '-', '-', '-'],
+            ['-', '-', '-', '-', '-'],
+            ['-', '-', '-', '-', '-'], 
+            ['-', '-', '-', '-', '-']]
+    
+    turns = 1
+    
+    while turns < 12: #if turns are less than 12
+            
+        if turns == 1:
+            place_dots('🛥️', board)
+            display_board(board)
+            turns += 1
+
+        else:
+            if check_winner(board) == False: 
+                player_move(player1,'💥', board)
+                turns += 1
+    else: 
+        print("Sorry you are all out of turns")   
+        print()
+      
+def playagain(): 
+
+    '''
+    asks user is they would like to play again
+    Args:
+        None
+    Returns:
+        depending on user's decision, play again or exit
+    '''
+
+    while True:
+        option = input("Would you like to play Battleship? yes or no:").lower()
+        if option == "yes":
+            main()
+        elif option == "no":
+            exit()
+
+        else: 
+            print('Invalid response, please input just: yes or no')
+            continue
+
+playagain()
+
+
+
+
+
