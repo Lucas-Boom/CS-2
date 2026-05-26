@@ -1,0 +1,262 @@
+''' 
+Name: Lucas Boom
+Date: 5/15/26
+Teacher: Gordie Campbell 
+Functions: factorial, summation, powers, sum_num_digits, fibo, GCD, comp_int_bal, product_two_whole_num, SR_Newton, main, play_again
+Description: Recursive functions pracice with an interactive menu 
+Log: 1.0
+'''
+
+def factorial(n): 
+    '''
+    Description: gives you the factorial of any non-negative number inputed
+    Args: 
+        n (int): A non-negative number
+    Returns: the factorial of n
+    '''
+
+    if n == 0: #if n equals 1
+        return 1 #return 1
+    else: 
+        return n * factorial(n - 1) # else return the factorial root of that -1 of each number every time
+
+def summation(n):
+    '''
+    Description: the sum of all the numbers from n down to 0
+    Args: 
+        n (int): A non-negative number
+    Returns: the total sum of numbers from n to 0
+    '''
+
+    if n > 0:
+        return n + summation(n-1)
+    elif n == 0:
+        return 0
+    
+def powers(a, n): 
+    '''
+    Description: calculates value 'a' raised to the power of value 'n' 
+    Args: 
+        a (int): the base number
+        n (int): A non-negative exponent
+    Returns: the value of a to the power of n
+    '''
+
+    if n > 0:
+        return a * powers(a,n-1)
+    elif n == 0: 
+        return 1
+    
+def sum_num_digits(n):
+    '''
+    Description: calculates sum of all digits in a number
+    Args: 
+        n (int): A positive integer
+    Returns: the sum of all digits of n
+    ''' 
+
+    if n < 10:
+        return n
+    else: 
+        return sum_num_digits(n // 10) + n % 10 
+
+def fibo(n): 
+    '''
+    Description: gives you the 'nth' fibonacci number using recursion
+    Args: 
+        n (int): A non-negative integer representing the position in the Fibonacci Sequence
+    Returns: the nth fibonacci number
+    '''
+
+    if n == 0:
+        return 0 
+    elif n == 1:
+        return 1
+    elif n > 1:
+        return fibo(n-1) + fibo(n-2)
+    
+def GCD(x, y):
+    '''
+    Description: calculates the greatest common devisor of two numbers using Euclid's Algorithm
+    Args: 
+        x (int): A positive integer
+        y (int): A positive integer
+    Returns: the greatest common idivsior between x and y
+    ''' 
+
+    if y <= x and x % y == 0:
+        return y 
+    else: 
+        return GCD(y,x % y)
+    
+def comp_int_bal(p,r,t):
+    '''
+    Description: calculates balance of value after compound interest is taken into account over time
+    Args: 
+        p (int): the starting amount 
+        r (int): the interest rate
+        t (int): number of time periods
+    Returns: final balance after compound interest
+    '''
+
+    if t == 0: #if time is zero years
+        return p #Return original pricipal money
+    elif t > 0:
+        return (1 + r) * comp_int_bal(p,r,t-1)
+    
+def product_two_whole_num(a,b):
+    '''
+    Description: multiplies two whole numbers
+    Args: 
+        a (int): A whole number
+        b (int): A whole number     
+    Returns: the product of a and b
+    '''
+    
+    if b > 0:
+        return a + product_two_whole_num(a,b-1)
+    elif b == 0:
+        return 0
+    
+def SR_Newton(n,p,e):
+    '''
+    Description: Approximates the square root of a number using Newton's method recursively
+    Args: 
+        n (float): The number to find the square root of
+        p (float): The allowed error tolerance
+        e (float): The current estimate
+    Returns: The approximation of the square root of n
+    '''
+
+    if abs(e^2 - n) < p:
+        return e
+    else: 
+        return SR_Newton((n,p,(e+n)/e)/2)
+
+        
+def main():
+    '''
+    Description: Displays a menu that allows the user to choose and run different recursive math functions
+    Args:
+        None
+    Returns:
+        User's inputed option that he chose
+    '''
+
+
+    while True: 
+        print()
+        print()
+        option = input('''Which function would you like to do: 
+                    1. Factorial
+                    2. Summation 
+                    3. Powers
+                    4. Sum of a number's digits
+                    5. Fibonacci 
+                    6. Euclid's Algorithm 
+                    7. Compound Interest Balance 
+                    8. Product of two whole number
+                    9. Sqaure root Newton's algorithm
+                    Place option here:  ''')
+        
+        if option == '1': 
+            n = input('Number you want factorial of: ')
+            try: 
+                print(factorial(int(n)))
+            except ValueError: 
+                print("Sorry, invalid input")
+                continue
+        
+        elif option == '2': 
+            n = input('Number you want to sum down from: ')
+            try: 
+                print(summation(int(n)))
+            except ValueError: 
+                print("Sorry, invalid input")
+                continue
+
+        elif option == '3':
+            n = input('Number of times to multiply base number: ')
+            a = input('Base number being multiplied: ')
+            try: 
+                print(powers(int(a), int(n)))
+            except ValueError: 
+                print("Sorry, invalid input")
+                continue
+
+        elif option == '4':
+            n = input('The number whose digits you want to add up: ')
+            try: 
+                print(sum_num_digits(int(n)))
+            except ValueError: 
+                print("Sorry, invalid input")
+                continue
+
+        elif option == '5':
+            n = input('Position in Fibonacci Sequence: ') 
+            try: 
+                print(fibo(int(n)))
+            except ValueError: 
+                print("Sorry, invalid input")
+                continue
+
+        elif option == '6':
+            x = input('Input first number: ')
+            y = input('Input a second number: ')  
+            try: 
+                print(GCD(int(x), int(y)))
+            except ValueError: 
+                print("Sorry, invalid input")
+                continue
+
+        elif option == '7': 
+            p = input('Input starting amount of money: ')
+            r = input('Input interest rate: ')
+            t = input('Input number of time periods(years): ')
+            try: 
+                print(comp_int_bal(int(p), float(r), int(t)))
+            except ValueError: 
+                print("Sorry, invalid input")
+                continue
+
+        elif option == '8':
+            a = input('Input any number: ')
+            b = input('Input a second number: ')
+            try: 
+                print(product_two_whole_num(int(a), int(b)))
+            except ValueError: 
+                print("Sorry, invalid input")
+                continue
+        
+        elif option == '9':
+            n = input('Number you want square root of: ')
+            p = input('How precise would you like it to be: ')
+            e = input('Current estimate of sqaure root: ')
+            try: 
+                print(SR_Newton(int(n), int(p), int(e)))
+            except ValueError: 
+                print("Sorry, invalid input")
+                continue
+            
+def playagain(): 
+
+    '''
+    asks user is they would like to play again
+    Args:
+        None
+    Returns:
+        depending on user's decision, play again or exit
+    '''
+
+    while True:
+        option = input("Would you like to use the recursive functions again? yes or no:").lower()
+        if option == "yes":
+            main()
+        elif option == "no":
+            exit()
+
+        else: 
+            print('Invalid response, please input just: yes or no')
+            continue
+
+playagain()
